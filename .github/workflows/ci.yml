@@ -1,0 +1,27 @@
+name: MLflow CI Workflow
+
+on:
+  push:
+    branches: [ "main", "master" ] 
+
+jobs:
+  train-model:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12.7'
+          
+      - name: Install dependencies
+        run: |
+          pip install pandas scikit-learn mlflow
+          
+      - name: Run MLflow Project
+        run: |
+          cd "Kriteria 3/MLProject" 
+          mlflow run . --env-manager=local
