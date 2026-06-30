@@ -1,0 +1,29 @@
+name: MLflow CI Workflow
+
+on:
+  push:
+    branches: [ "main", "master" ] # Trigger akan terpantik saat ada push ke branch ini
+
+jobs:
+  train-model:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12.7'
+          
+      - name: Install dependencies
+        # Kita install manual agar proses CI jauh lebih cepat
+        run: |
+          pip install pandas scikit-learn mlflow
+          
+      - name: Run MLflow Project
+        # Pindah ke direktori MLProject dan jalankan otomatisasi pelatihannya
+        run: |
+          cd MLProject
+          mlflow run . --env-manager=local
