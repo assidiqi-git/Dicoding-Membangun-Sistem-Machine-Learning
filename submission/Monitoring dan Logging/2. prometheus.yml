@@ -1,0 +1,9 @@
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: 'mlflow_model'
+    metrics_path: /metrics
+    static_configs:
+      # host.docker.internal mengarah ke mesin host (Windows) dari dalam container Docker
+      - targets: ['host.docker.internal:8000']
